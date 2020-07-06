@@ -32,23 +32,9 @@ public class TestServiceController {
         return new ResponseEntity<>(personEntity, HttpStatus.OK);
     }
 
-    @DeleteMapping(path = {"/del/{id}"})
-    public void delPerson(@PathVariable String id) {
-        testBusinessLogicService.processDel(id);
-    }
-
-
-    @PutMapping(path = {"/put/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PersonEntity> updPerson(@PathVariable String id, @RequestBody Person person) {
-        PersonEntity personEntity = testBusinessLogicService.processUpd(id, person);
-        return new ResponseEntity<>(personEntity, HttpStatus.OK);
-    }
-
     @GetMapping(path = {"/get/all"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PersonEntity>> getAll() {
         List<PersonEntity> personEntities = testBusinessLogicService.processGetAll();
         return new ResponseEntity<>(personEntities, HttpStatus.OK);
     }
-
-
 }

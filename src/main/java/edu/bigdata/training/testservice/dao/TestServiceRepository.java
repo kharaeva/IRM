@@ -24,18 +24,18 @@ public class TestServiceRepository {
         ignite.getOrCreateCache(personCacheConfiguration).put(personEntity.getId(), personEntity);
     }
 
-    public PersonEntity get(UUID id) { return ignite.getOrCreateCache(personCacheConfiguration).get(id);}
-
-    public void delete(UUID id) { ignite.getOrCreateCache(personCacheConfiguration).remove(id);}
-
-    public PersonEntity update(PersonEntity personEntity) { return ignite.getOrCreateCache(personCacheConfiguration).getAndReplace(personEntity.getId(), personEntity);}
+    public PersonEntity get(UUID id){
+        return ignite.getOrCreateCache(personCacheConfiguration).get(id);
+    }
 
     public List<PersonEntity> getAll(){
         Iterable<Cache.Entry<UUID,PersonEntity>> iterable = () -> ignite.getOrCreateCache(personCacheConfiguration).iterator();
 
-        return StreamSupport
+        List<PersonEntity> persons = StreamSupport
                 .stream(iterable.spliterator(), false)
                 .map(Cache.Entry::getValue)
                 .collect(Collectors.toList());
+
+        return persons;
     }
 }
