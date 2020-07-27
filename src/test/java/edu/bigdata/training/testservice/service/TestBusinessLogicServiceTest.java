@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @RunWith(SpringRunner.class)
@@ -49,8 +48,16 @@ public class TestBusinessLogicServiceTest {
 
         Assert.assertEquals("name", personEntityList.getName());
         Mockito.verify(testServiceRepository, Mockito.times(1)).get(any());
-
     }
+
+    @Test
+    public void testUpd(){
+        Person person = new Person("test");
+        PersonEntity personEntity = testBusinessLogicService.processUpd(UUID.randomUUID().toString(), person);
+        Assert.assertEquals("name", personEntity.getName());
+        Mockito.verify(testServiceRepository, Mockito.times(1)).update(any());
+    }
+
 
     @Test
     public void testGetALL(){
@@ -62,6 +69,12 @@ public class TestBusinessLogicServiceTest {
 
     }
 
+    @Test
+    public void testDel(){
+        testBusinessLogicService.processDel(UUID.randomUUID().toString());
+        Mockito.verify(testServiceRepository, Mockito.times(1)).delete(any());
+    }
+
     @Configuration
     static class TestBusinessLogicServiceTestConfiguration {
 
@@ -71,6 +84,8 @@ public class TestBusinessLogicServiceTest {
             when(testServiceRepository.get(any())).thenReturn(new PersonEntity("name"));
             when(testServiceRepository.getAll())
                     .thenReturn(Arrays.asList(new PersonEntity("name1"),new PersonEntity("name2")));
+            when(testServiceRepository.update(any()))
+                    .thenReturn(new PersonEntity("name"));
             return testServiceRepository;
         }
 

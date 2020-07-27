@@ -39,6 +39,14 @@ public class EntityUtils {
         return new PersonEntity(rdmStr(15));
     }
 
+    public PersonEntity createPersonEntity(String id) {
+        PersonEntity personEntity = createPersonEntity();
+        personEntity.setId(UUID.fromString(id));
+        testServiceRepository.save(personEntity);
+
+        return personEntity;
+    }
+
     public static String rdmStr(int length) {
         return RandomStringUtils.randomAlphabetic(length);
     }

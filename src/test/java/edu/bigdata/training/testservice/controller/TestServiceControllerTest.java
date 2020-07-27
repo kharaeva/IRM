@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -93,5 +94,25 @@ public class TestServiceControllerTest {
 
         PersonEntity personEntity1 = entityUtils.getPersonEntity(personEntity.getId().toString());
         Assert.assertEquals(null, personEntity1);
+    }
+
+    @Test
+    public void upd_should_updatePersonEntity_when_personEntityExists() throws Exception {
+        String id  = UUID.randomUUID().toString();
+        PersonEntity personEntity = entityUtils.createPersonEntity(id);
+        String argJson = objectMapper.writeValueAsString(new Person("new"));
+
+        String response = mvc.perform(put("/person/" + personEntity.getId())
+                .content(argJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        Map<String, String> responseObject = objectMapper.readValue(response, Map.class);
+        Assert.assertEquals(personEntity.getName(), responseObject.get("name"));
+
+        PersonEntity personEntity1 = entityUtils.getPersonEntity(responseObject.get("id"));
+        Assert.assertEquals("new", personEntity1.getName());
+
     }
 }
