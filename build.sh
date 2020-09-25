@@ -1,8 +1,4 @@
 #!/bin/bash
-ls -la
-cd src/main/resources
-pwd
-ls -la
 mvn clean
 mvn package
 docker build --tag "$1" .
