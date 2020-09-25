@@ -1,5 +1,7 @@
 #!/bin/bash
 ls -la
+cd src
+pwd
 cd ./src/main/resources/keystore/local
 pwd
 cd ./src/main/resources/keystore
