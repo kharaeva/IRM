@@ -1,4 +1,7 @@
 #!/bin/bash
+env
+whoami
+pwd
 mvn clean
 mvn package
 docker build --tag "$1" .

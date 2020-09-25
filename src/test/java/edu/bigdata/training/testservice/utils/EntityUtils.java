@@ -5,8 +5,6 @@ import edu.bigdata.training.testservice.model.PersonEntity;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.ignite.Ignite;
 
-import java.util.UUID;
-
 public class EntityUtils {
     private TestServiceRepository testServiceRepository;
     private Ignite ignite;
@@ -25,26 +23,12 @@ public class EntityUtils {
         return personEntity;
     }
 
-    public PersonEntity getPersonEntity(String id) {
-        testServiceRepository.get(UUID.fromString(id));
-
-        return testServiceRepository.get(UUID.fromString(id));
-    }
-
     public void clearPersonEntitiesCache() {
         ignite.getOrCreateCache("person").clear();
     }
 
     public static PersonEntity createPersonEntity() {
         return new PersonEntity(rdmStr(15));
-    }
-
-    public PersonEntity createPersonEntity(String id) {
-        PersonEntity personEntity = createPersonEntity();
-        personEntity.setId(UUID.fromString(id));
-        testServiceRepository.save(personEntity);
-
-        return personEntity;
     }
 
     public static String rdmStr(int length) {
