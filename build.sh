@@ -1,15 +1,8 @@
 #!/bin/bash
-la -la
-cd src/main/resources/keystore/local
-pwd
-cd src/main/resources/keystore
-pwd
+ls -la
 cd src/main/resources
 pwd
-cd src/main
-pwd
-cd src
-pwd
+ls -la
 mvn clean
 mvn package
 docker build --tag "$1" .
