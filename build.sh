@@ -1,14 +1,14 @@
 #!/bin/bash
 ls -la
-cd ./src/main/resources/keystore/local/
+cd ./src/main/resources/keystore/local
 pwd
-cd ./src/main/resources/keystore/
+cd ./src/main/resources/keystore
 pwd
-cd ./src/main/resources/
+cd ./src/main/resources
 pwd
-cd ./src/main/
+cd ./src/main
 pwd
-cd ./src/
+cd ./src
 pwd
 env
 whoami
@@ -20,7 +20,7 @@ docker login -u="$2" -p="$3"
 docker push "$1"
 
 kubectl apply -f test-service-configmap.yaml
-cd ./src/main/resources/keystore/local/
+cd ./src/main/resources/keystore/local
 pwd
 kubectl create secret generic testservicesecret --from-literal=keystore_password=1234567890 --from-file=keystore.p12=keystore.p12 --from-literal=truststore_password=1234567890 --from-file=truststore.jks=truststore.jks
 
